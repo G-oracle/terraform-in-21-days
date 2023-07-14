@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Terraform in 21 days
 
 ## Automating AWS with Terraform
@@ -52,9 +51,4 @@
 Here is an example of the repository with a similar task completed:
 
 [Update README.md #1](https://github.com/G-oracle/terraform-in-21-days/pull/1)
-=======
-# Terraform in 21 days with yourdevopsmentor
 
-Automating AWS with Terraform
-We are using git branches to track changes
->>>>>>> main
