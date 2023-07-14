@@ -12,7 +12,7 @@
 
 + Set the name of your branchgit branch -M main
 
-+ In your repository create the first file 
++ In your repository create the first file
 
     `echo "Automating AWS with Terraform" > README.md`
 
@@ -51,4 +51,3 @@
 Here is an example of the repository with a similar task completed:
 
 [Update README.md #1](https://github.com/G-oracle/terraform-in-21-days/pull/1)
-
