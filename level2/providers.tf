@@ -12,7 +12,7 @@ terraform {
     bucket         = "terraform-remote-state-1610"
     key            = "level2.tfstate"
     region         = "us-east-2"
-    dynamodb_table = "remote-state-lock"
+    dynamodb_table = "state-lock"
   
   }
 }

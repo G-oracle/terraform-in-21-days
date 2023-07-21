@@ -47,16 +47,65 @@ resource "aws_security_group" "public" {
   }
 }
 
-resource "aws_instance" "orac" {
+resource "aws_instance" "orac-public" {
+  count = 2
+
   ami                         = data.aws_ami.amazonlinux.id
   instance_type               = "t3.micro"
-  subnet_id                   = data.terraform_remote_state.level1.outputs.public_subnet_id[1]
+  subnet_id                   = data.terraform_remote_state.level1.outputs.public_subnet_id[count.index]
   vpc_security_group_ids      = [aws_security_group.public.id]
   key_name                    = "main"
   associate_public_ip_address = true
+
+  tags = {
+    Name = "${var.env_code}-public${count.index}"
+  }
+}
+
+resource "aws_instance" "orac-private" {
+  count = 2
+
+  ami                         = data.aws_ami.amazonlinux.id
+  instance_type               = "t3.micro"
+  subnet_id                   = data.terraform_remote_state.level1.outputs.private_subnet_id[count.index]
+  vpc_security_group_ids      = [aws_security_group.private.id]
+  key_name                    = "main"
   user_data                   = file("user-data.sh")
 
   tags = {
-    Name = "${var.env_code}-public"
+    Name = "${var.env_code}-private${count.index}"
+  }
+}
+
+resource "aws_security_group" "private" {
+  name        = "${var.env_code}-private"
+  description = "Allow VPC trafic"
+  vpc_id      = data.terraform_remote_state.level1.outputs.vpc_id
+
+  ingress {
+    description = "SSH from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [data.terraform_remote_state.level1.outputs.vpc_cidr]
+  }
+
+  ingress {
+    description = "HTTP from load balancer"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.env_code}-private"
   }
 }
