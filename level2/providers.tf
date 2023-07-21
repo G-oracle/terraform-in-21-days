@@ -13,7 +13,7 @@ terraform {
     key            = "level2.tfstate"
     region         = "us-east-2"
     dynamodb_table = "state-lock"
-  
+
   }
 }
 
