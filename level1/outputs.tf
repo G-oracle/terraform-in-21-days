@@ -8,3 +8,7 @@ output "public_subnet_id" {
 output "vpc_cidr" {
   value = var.vpc_cidr
 }
+
+output "private_subnet_id" {
+  value = aws_subnet.private[*].id
+}
