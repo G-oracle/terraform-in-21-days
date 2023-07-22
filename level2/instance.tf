@@ -24,7 +24,7 @@ resource "aws_security_group" "public" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [data.terraform_remote_state.level1.outputs.vpc_cidr]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
